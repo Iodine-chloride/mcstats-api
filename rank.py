@@ -87,26 +87,20 @@ class StatsRank:
             values = 0
             if unit != "default":
                 if any(item.startswith("minecraft:damage_") for item in items):
-                    if unit == "heart":
-                        count = 20
-                    elif unit == "half-heart":
-                        count = 10
+                    match unit:
+                        case "heart": count = 20
+                        case "half-heart": count = 10
                 if any(item.endswith("_one_cm") for item in items):
-                    if unit == "m":
-                        count = 100
-                    elif unit == "km":
-                        count = 100000
+                    match unit:
+                        case "m": count = 100
+                        case "km": count = 100000
                 if any(item.endswith("_time") or item.startswith("minecraft:time_") for item in items):
-                    if unit == "s":
-                        count = 20
-                    elif unit == "min":
-                        count = 1200
-                    elif unit == "h":
-                        count = 72000
-                    elif unit == "day":
-                        count = 1728000
-                    elif unit == "game-day":
-                        count = 24000
+                    match unit:
+                        case "s": count = 20
+                        case "min": count = 1200
+                        case "h": count = 72000
+                        case "day": count = 1728000
+                        case "game-day": count = 24000
             custom_stats = stats.get("stats", {}).get("minecraft:custom", {})
             for item in custom_stats:
                 values += custom_stats.get(item, 0)

@@ -11,13 +11,16 @@ if __name__ == "__main__":
                         help='用户缓存文件路径 (默认: ./usercache.json)')
     parser.add_argument('--rank-config', type=str, default="./rank_config.json",
                         help='排行配置文件路径 (默认: ./rank_config.json)')
+    parser.add_argument('--scoreboard-path', type=str, default="./world/data/scoreboard.dat",
+                        help='记分板文件路径 (默认: ./world/data/scoreboard.dat)')
     
     args = parser.parse_args()
     
     app = create_app(
         stats_dir=args.stats_dir,
         usercache_path=args.usercache,
-        rank_config_path=args.rank_config
+        rank_config_path=args.rank_config,
+        scoreboard_path=args.scoreboard_path
     )
     
     app.run(host="0.0.0.0", port=args.port)

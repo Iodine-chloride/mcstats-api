@@ -1,10 +1,12 @@
 from flask import Flask, jsonify
 from rank import StatsRank, DEFAULT_RANK_FIELDS
 from stats import StatsPlayer
+from scoreboard import Scoreboard
 
 def create_app(stats_dir="./world/stats", 
                usercache_path="./usercache.json", 
-               rank_config_path="./rank_config.json"):
+               rank_config_path="./rank_config.json",
+               scoreboard_path="./world/data/scoreboard.dat"):
     app = Flask(__name__)
     core = StatsRank(
         stats_dir=stats_dir,
@@ -17,6 +19,8 @@ def create_app(stats_dir="./world/stats",
         usercache_path=usercache_path,
         rank_config_path=rank_config_path
     )
+
+    scoreboard = Scoreboard(scoreboard_path=scoreboard_path)
 
     @app.route('/api/rank/all', methods=['GET'])
     def api_rank_all():
@@ -43,5 +47,19 @@ def create_app(stats_dir="./world/stats",
         if not stats:
             return jsonify({"error": "Player not found"}), 404
         return jsonify(stats)
+    
+    @app.route('/api/scoreboard/leaderboard/<objective>', methods=['GET'])
+    def api_scoreboard_leaderboard(objective):
+        leaderboard = scoreboard.get_leaderboard(objective)
+        if leaderboard is None:
+            return jsonify({"error": "Objective not found"}), 404
+        return jsonify(leaderboard)
+    
+    @app.route('/api/scoreboard/player/<player_name>', methods=['GET'])
+    def api_scoreboard_player(player_name):
+        scores = scoreboard.get_player_scores(player_name)
+        if scores is None:
+            return jsonify({"error": "Player not found"}), 404
+        return jsonify(scores)
     
     return app
