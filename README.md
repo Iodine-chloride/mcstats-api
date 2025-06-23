@@ -1,9 +1,9 @@
 # mcstats-API
 获取玩家统计数据生成排行榜,并且生成一个API以供调用
 
-##使用
+## 使用
 
-###下载
+### 下载
 
 从[Release页面](https://github.com/Iodine-chloride/mcstats-api/releases)下载stats.pyz文件
 
@@ -31,11 +31,11 @@
 
     └── ...
 
-###安装依赖
+### 安装依赖
 
     pip install flask nbtlib
 
-###运行
+### 运行
 
 在服务器根目录执行
 
@@ -47,9 +47,9 @@
 
     python stats.pyz -port 1145
 
-##API
+## API
 
-###玩家统计数据榜单
+### 玩家统计数据榜单
 
 程序默认内置了以下榜单
 
@@ -69,7 +69,7 @@
 
     GET /api/rank/mined HTTP/1.1
 
-###获取单独玩家统计数据
+### 获取单独玩家统计数据
 
 输出指定玩家/UUID的榜单项目 
 
@@ -81,19 +81,19 @@
 
     GET /api/player/8667ba71-b85a-4004-af54-457a9734eed7 HTTP/1.1
 
-###获取指定玩家所有计分板数据
+### 获取指定玩家所有计分板数据
 
 例：输出Steve的所有计分板数据
 
     GET /api/scoreboard/player/Steve HTTP/1.1
 
-###获取某项积分数据的前十名
+### 获取某项积分数据的前十名
 
 例：输出名为"spring_move"的计分板项前十名
 
     GET /api/scoreboard/leaderboard/spring_move HTTP/1.1
 
-##自定义榜单
+## 自定义榜单
 
 在程序目录下新建rank_config.json文件用于编写自定义榜单,格式如下
 
