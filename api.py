@@ -1,24 +1,20 @@
 from flask import Flask, jsonify
-from rank import StatsRank, DEFAULT_RANK_FIELDS
+from statspublic import StatsPublic, DEFAULT_RANK_FIELDS
 from stats import StatsPlayer
 from scoreboard import Scoreboard
+from rank import StatsRank
 
 def create_app(stats_dir="./world/stats", 
                usercache_path="./usercache.json", 
                rank_config_path="./rank_config.json",
                scoreboard_path="./world/data/scoreboard.dat"):
     app = Flask(__name__)
-    core = StatsRank(
-        stats_dir=stats_dir,
-        usercache_path=usercache_path,
-        rank_config_path=rank_config_path
-    )
+
+    stats_public = StatsPublic(stats_dir=stats_dir, usercache_path=usercache_path, rank_config_path=rank_config_path)
+
+    core = StatsRank(stats_public)
     
-    player_stats = StatsPlayer(
-        stats_dir=stats_dir,
-        usercache_path=usercache_path,
-        rank_config_path=rank_config_path
-    )
+    player_stats = StatsPlayer(stats_public)
 
     scoreboard = Scoreboard(scoreboard_path=scoreboard_path)
 
