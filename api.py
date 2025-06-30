@@ -24,7 +24,7 @@ def create_app(stats_dir="./world/stats",
     
     @app.route('/api/rank/<field>', methods=['GET'])
     def api_rank_field(field):
-        rank_config = core.load_rank_config()
+        rank_config = stats_public.load_rank_config()
         all_fields = DEFAULT_RANK_FIELDS.copy()
         custom_fields = [rank["name"] for rank in rank_config.get("custom_ranks", [])]
         all_fields.extend(custom_fields)
